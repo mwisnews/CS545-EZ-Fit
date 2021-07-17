@@ -1,0 +1,39 @@
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/main.css" />
+  </head>
+
+  <body>
+    <header class="bg-primary site-header">
+      <a href="/" class="home-link">
+        <h1>EZ-Fit</h1>
+      </a>
+      <a href="/logout" class="logout-link">
+        Logout
+      </a>
+
+    </header>
+
+    <main class="container-fluid">
+      {{{body}}}
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/public/js/login.js"></script>
+
+  </body>
+
+</html>
