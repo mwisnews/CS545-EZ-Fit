@@ -96,7 +96,6 @@ async function createGoal(
     !target ||
     !startDate ||
     !endDate ||
-    !completed ||
     !milestones
   ) {
     throw `Error: Not all attributes inputted in createGoal!`;
@@ -167,12 +166,15 @@ async function addNewMilestone(goalID, milestone) {
     throw e;
   }
   const goalCollection = await Goals;
-  const goalList = await goalCollection.findOne({ _id: goalObj }).toArray();
+  const goalList = await goalCollection.findOne({ _id: goalObj });
   if (goalList.length === 0) {
     throw `Error: goalList does not exist in addNewMilestone!`;
   }
   // Check milestone
-  let cleanMilestone = checkStr(milestone);
+  let cleanMilestone = parseInt(milestone);
+  if (isNaN(cleanMilestone)) {
+    throw `Error: milestone is not a number in addNewMilestone!`;
+  }
 
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
@@ -264,7 +266,7 @@ async function deleteGoal(goalID) {
     throw `Error: Goal not found in deleteGoal!`;
   }
   // Everything looks good let's remove the post
-  const deleteInfo = await goalCollection.removeOne({
+  const deleteInfo = await goalCollection.deleteOne({
     _id: ObjectId(cleanGoal),
   });
   if (deleteInfo.deletedCount === 0) {

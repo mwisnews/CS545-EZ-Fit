@@ -84,7 +84,7 @@ async function createUser(firstName, lastName, age = null, weight = null) {
     weight: cleanWeight,
     currentGoal: "",
     pastGoals: [],
-    pastActivies: [],
+    pastActivities: [],
   };
 
   const userCollection = await Users;
@@ -111,21 +111,29 @@ async function setNewGoal(userID, goalID) {
   }
   const userCollection = await Users;
   const goalCollection = await Goals;
-  const userList = await userCollection.findOne({ _id: userObj }).toArray();
+  const userList = await userCollection.findOne({ _id: userObj });
   if (userList.length === 0) {
     throw `Error: User does not exist in setNewGoal!`;
   }
-  const goalList = await goalCollection.findOne({ _id: goalObj }).toArray();
+  const goalList = await goalCollection.findOne({ _id: goalObj });
   if (goalList.length === 0) {
     throw `Error: Goal does not exist in setNewGoal!`;
   }
 
   // Everything looks good, add the current goal to past goal array and set new goal
-  let currGoal = goalList[0].currentGoal;
-  const updateStatus = await userCollection.updateOne(
-    { _id: userObj },
-    { $push: { pastGoals: currGoal }, $set: { currentGoal: cleanGoal } }
-  );
+  let currGoal = userList.currentGoal;
+  let updateStatus;
+  if (currGoal) {
+    updateStatus = await userCollection.updateOne(
+      { _id: userObj },
+      { $push: { pastGoals: currGoal }, $set: { currentGoal: cleanGoal } }
+    );
+  } else {
+    updateStatus = await userCollection.updateOne(
+      { _id: userObj },
+      { $set: { currentGoal: cleanGoal } }
+    );
+  }
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
   }
@@ -141,12 +149,12 @@ async function addNewActivity(userID, activity) {
   let cleanUser = checkStr(userID);
   let userObj;
   try {
-    goalObj = ObjectId(cleanGoal);
+    userObj = ObjectId(cleanUser);
   } catch (e) {
     throw e;
   }
   const userCollection = await Users;
-  const userList = await userCollection.findOne({ _id: userObj }).toArray();
+  const userList = await userCollection.findOne({ _id: userObj });
   if (userList.length === 0) {
     throw `Error: User does not exist in addNewActivity!`;
   }
@@ -159,14 +167,16 @@ async function addNewActivity(userID, activity) {
       throw `Error: activity has non-date as key in addNewActivity!`;
     }
     for (let i = 0; i < value.length; i++) {
-      checkStr(value[i]);
+      if (!value[i]) {
+        throw `Error: activity array is invalid in addNewActivity!`;
+      }
     }
   }
 
   // Everything looks good, add the activity to the user
   const updateStatus = await userCollection.updateOne(
     { _id: userObj },
-    { $push: { pastActivies: activity } }
+    { $push: { pastActivities: activity } }
   );
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
@@ -210,7 +220,7 @@ async function updateUser(userID, updatedUser) {
   // Copy over current goal, past goal, and past activities
   updateObj.currentGoal = userToBeUpdated.currentGoal;
   updateObj.pastGoals = userToBeUpdated.pastGoals;
-  updateObj.pastActivies = userToBeUpdated.pastActivies;
+  updateObj.pastActivities = userToBeUpdated.pastActivities;
 
   const userInfo = await userCollection.updateOne(
     { _id: ObjectId(userID) },
@@ -235,7 +245,7 @@ async function deleteUser(userID) {
     throw `Error: User not found in updateUser!`;
   }
   // Everything looks good let's remove the post
-  const deleteInfo = await userCollection.removeOne({
+  const deleteInfo = await userCollection.deleteOne({
     _id: ObjectId(cleanUser),
   });
   if (deleteInfo.deletedCount === 0) {

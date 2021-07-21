@@ -86,14 +86,12 @@ async function addNewRecommendation(exerciseID, recommendation) {
   let cleanRecommendation = checkStr(recommendation);
   let exerciseObj;
   try {
-    exerciseObj = ObjectId(exerciseObj);
+    exerciseObj = ObjectId(cleanExercise);
   } catch (e) {
     throw e;
   }
   const exerciseCollection = await Exercises;
-  const exerciseList = await exerciseCollection
-    .findOne({ _id: exerciseObj })
-    .toArray();
+  const exerciseList = await exerciseCollection.findOne({ _id: exerciseObj });
   if (exerciseList.length === 0) {
     throw `Error: Exercise does not exist in addNewRecommendation!`;
   }
@@ -157,7 +155,7 @@ async function deleteExercise(exerciseID) {
     throw `Error: Exercise not found in deleteExercise!`;
   }
   // Everything looks good let's remove the post
-  const deleteInfo = await exerciseCollection.removeOne({
+  const deleteInfo = await exerciseCollection.deleteOne({
     _id: ObjectId(cleanExercise),
   });
   if (deleteInfo.deletedCount === 0) {

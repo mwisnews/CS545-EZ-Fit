@@ -1,6 +1,6 @@
 {
-  "mongoConfig": {
-    "serverUrl": "mongodb://localhost:27017",
+  "mongodbConfig": {
+    "serverURL": "mongodb://localhost:27017",
     "database": "EZ-Fit",
     "collections": ["Users"]
   }
