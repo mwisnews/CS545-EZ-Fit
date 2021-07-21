@@ -1,0 +1,38 @@
+.bg-primary{
+    color:black;
+}
+
+.site-header {
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+  }
+  
+  .site-header a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .site-header h1 {
+    margin: 0;
+  }
+  
+  .error {
+    color: red;
+    font-size: 16px;
+    margin: 16px 0;
+  }
+  
+  .container-fluid {
+    padding: 15px;
+  }
+  
+  a {
+    font-size: 16px;
+  }
+  
+  .logout-link {
+    display: none;
+  }
