@@ -1,0 +1,26 @@
+{
+  "name": "cs545-ez-fit",
+  "version": "1.0.0",
+  "description": "CS545 Human Computer Interaction Final Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node tasks/seedData.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwisnews/CS545-EZ-Fit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwisnews/CS545-EZ-Fit/issues"
+  },
+  "homepage": "https://github.com/mwisnews/CS545-EZ-Fit#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "mongodb": "^4.0.1"
+  }
+}

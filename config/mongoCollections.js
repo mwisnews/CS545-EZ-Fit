@@ -1,19 +1,19 @@
-const mongodbConnection = require("./mongodbConnection");
+const dbConnection = require("./mongoConnection");
 
-const db = mongodbConnection.getDB();
-
-let _collection;
-
+/* This will allow you to have one reference to each collection per app */
+/* Feel free to copy and paste this this */
 const getCollection = async (collection) => {
-  try {
-    if (!db) db = mongodbConnection.createConnection();
-    _collection = await db.collection(collection);
-  } catch (err) {
-    throw err;
+  let _col = undefined;
+  if (!_col) {
+    const db = await dbConnection();
+    _col = await db.collection(collection);
   }
-  return _collection;
+
+  return _col;
 };
 
 module.exports = {
-  Users: getCollection("Users")
+  Users: getCollection("Users"),
+  Exercises: getCollection("Exercises"),
+  Goals: getCollection("Goals"),
 };
