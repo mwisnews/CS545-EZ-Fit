@@ -1,0 +1,30 @@
+{
+  "name": "cs545-ez-fit",
+  "version": "1.0.0",
+  "description": "The repository for our CS-545 Project, EZ-Fit. Collaborators: Ben Mirtchouk, Jessica Noel, Jason Rossi, Timothy Wang, and Matthew Wisnewski",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwisnews/CS545-EZ-Fit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwisnews/CS545-EZ-Fit/issues"
+  },
+  "homepage": "https://github.com/mwisnews/CS545-EZ-Fit#readme",
+  "devDependencies": {
+    "prettier": "^2.3.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "mongodb": "^4.0.1",
+    "nocache": "^3.0.1"
+  }
+}
