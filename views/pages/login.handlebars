@@ -1,0 +1,45 @@
+<div id="loginTexts">
+  <h1 id="loginWelcome">Welcome to EZ-Fit!</h1>
+  <h2 id="loginPrompt">Please sign in below using your email and password.</h2>
+</div>
+
+<div id="loginFormDiv">
+  <form method="POST" id="loginForm">
+    <div class="form-group">
+      <label for="emailLogin">Please enter your email address</label>
+      <input
+        type="email"
+        name="username"
+        id="emailLogin"
+        placeholder="Email Address"
+        required
+        class="form-control"
+        value="{{username}}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="passwordLogin">Please enter your password</label>
+      <input
+        type="password"
+        name="password"
+        id="passwordLogin"
+        placeholder="Password"
+        required
+        class="form-control"
+        value="{{password}}"
+      />
+    </div>
+
+    <button id="loginBtn" class="btn btn-primary" type="submit">Login</button>
+
+    {{#if error}}
+      <p class="error">
+        Invalid username and/or password
+      </p>
+    {{/if}}
+  </form>
+</div>
+<div id="newUserLinkDiv">
+  <br />
+  <a href="/newUser" id="newUserLink">Are you new to EZ-Fit? Sign up here!</a>
+</div>
