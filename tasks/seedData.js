@@ -11,7 +11,13 @@ const main = async () => {
   } catch (e) {}
   // Start seeding
   // Create user Max
-  const max = await users.createUser("Max", "Williams", 25, 195);
+  const max = await users.createUser(
+    "Max",
+    "Williams",
+    25,
+    195,
+    "60f82057e2ef2a7dc3fd5a62"
+  );
   console.log(max);
 
   // Get users

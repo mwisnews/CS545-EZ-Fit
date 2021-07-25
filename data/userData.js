@@ -3,6 +3,8 @@ const Users = mongoCollections.Users;
 const Goals = mongoCollections.Goals;
 let { ObjectId } = require("mongodb");
 
+// TODO: pastActivities should be [[activity], [activity]]
+
 /*
     HELPER FUNCTIONS TO CHECK USER INPUT 
 */
@@ -54,7 +56,13 @@ async function getUserByID(userID) {
 // Create user function
 // Input: All attributes of a user
 // Output: Returns user ID that was created
-async function createUser(firstName, lastName, age = null, weight = null) {
+async function createUser(
+  firstName,
+  lastName,
+  age = null,
+  weight = null,
+  id = null
+) {
   // Error checking
   let cleanFirstName = checkStr(firstName);
   let cleanLastName = checkStr(lastName);
@@ -76,16 +84,32 @@ async function createUser(firstName, lastName, age = null, weight = null) {
     cleanWeight = null;
   }
 
+  let newUser;
+  if (id) {
+    let cleanID = ObjectId(id);
+    newUser = {
+      _id: cleanID,
+      firstName: cleanFirstName,
+      lastName: cleanLastName,
+      age: cleanAge,
+      weight: cleanWeight,
+      currentGoal: "",
+      pastGoals: [],
+      pastActivities: [],
+    };
+  } else {
+    newUser = {
+      firstName: cleanFirstName,
+      lastName: cleanLastName,
+      age: cleanAge,
+      weight: cleanWeight,
+      currentGoal: "",
+      pastGoals: [],
+      pastActivities: [],
+    };
+  }
+
   // Everything looks good, create the new user
-  let newUser = {
-    firstName: cleanFirstName,
-    lastName: cleanLastName,
-    age: cleanAge,
-    weight: cleanWeight,
-    currentGoal: "",
-    pastGoals: [],
-    pastActivities: [],
-  };
 
   const userCollection = await Users;
   const insertInfo = await userCollection.insertOne(newUser);

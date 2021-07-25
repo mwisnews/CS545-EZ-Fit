@@ -25,6 +25,15 @@ app.use(
   })
 );
 
+app.use("*", (req, res, next) => {
+  if (!req.session.userID) {
+    req.session.userID = "60f82057e2ef2a7dc3fd5a62";
+    next();
+  } else {
+    next();
+  }
+});
+
 configRoutes(app);
 
 app.listen(PORT, () =>

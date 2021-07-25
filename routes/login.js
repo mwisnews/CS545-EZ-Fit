@@ -15,13 +15,13 @@ router.get("/login", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    try {
-        res.render("pages/home", { title: "Home Page" });
-      } catch (e) {
-        console.log(e);
-        res.sendStatus(500);
-      }
-  });
+  try {
+    res.render("pages/home", { title: "Home Page" });
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
 
 router.get("/newUser", async (req, res) => {
   try {

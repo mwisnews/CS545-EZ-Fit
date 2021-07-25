@@ -4,6 +4,9 @@ const Exercises = mongoCollections.Exercises;
 const Goals = mongoCollections.Goals;
 let { ObjectId } = require("mongodb");
 
+// TODO: Make target an object of {running: 3.1}
+// same for milestones
+
 /*
     HELPER FUNCTIONS TO CHECK USER INPUT 
 */
