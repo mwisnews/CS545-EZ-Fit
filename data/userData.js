@@ -3,8 +3,6 @@ const Users = mongoCollections.Users;
 const Goals = mongoCollections.Goals;
 let { ObjectId } = require("mongodb");
 
-// TODO: pastActivities should be [[activity], [activity]]
-
 /*
     HELPER FUNCTIONS TO CHECK USER INPUT 
 */
@@ -182,18 +180,17 @@ async function addNewActivity(userID, activity) {
   if (userList.length === 0) {
     throw `Error: User does not exist in addNewActivity!`;
   }
-  // Activity should be like { Date: [ Goal ID, Exercise Amount, Comments ], ... }
-  if (!activity || typeof activity !== "object") {
+  // Activity should be like [ [ Date, Goal ID, [Execise Type, Exercise Amount], Comments ], ... ]
+  if (!activity || !Array.isArray(activity)) {
     throw `Error: activity is invalid in addNewActivity`;
   }
-  for (const [key, value] of Object.entries(activity)) {
-    if (isNaN(Date.parse(key))) {
-      throw `Error: activity has non-date as key in addNewActivity!`;
-    }
-    for (let i = 0; i < value.length; i++) {
-      if (!value[i]) {
-        throw `Error: activity array is invalid in addNewActivity!`;
-      }
+  if (isNaN(Date.parse(activity[0]))) {
+    throw `Error: activity has non-date as key in addNewActivity!`;
+  }
+  activity[0] = new Date(activity[0]);
+  for (let i = 0; i < activity.length; i++) {
+    if (!activity[i]) {
+      throw `Error: activity array is invalid in addNewActivity!`;
     }
   }
 
@@ -201,6 +198,49 @@ async function addNewActivity(userID, activity) {
   const updateStatus = await userCollection.updateOne(
     { _id: userObj },
     { $push: { pastActivities: activity } }
+  );
+  if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
+    throw "Error, update failed";
+  }
+
+  return getUserByID(cleanUser);
+}
+
+// Remove activity function
+// Input: User ID, activity information
+// Output: Returns user ID with inputted activity removed
+async function removeActivity(userID, activity) {
+  // Error check
+  let cleanUser = checkStr(userID);
+  let userObj;
+  try {
+    userObj = ObjectId(cleanUser);
+  } catch (e) {
+    throw e;
+  }
+  const userCollection = await Users;
+  const userList = await userCollection.findOne({ _id: userObj });
+  if (userList.length === 0) {
+    throw `Error: User does not exist in removeActivity!`;
+  }
+  // Activity should be like [ [ Date, Goal ID, [Execise Type, Exercise Amount], Comments ], ... ]
+  if (!activity || !Array.isArray(activity)) {
+    throw `Error: activity is invalid in removeActivity`;
+  }
+  if (isNaN(Date.parse(activity[0]))) {
+    throw `Error: activity has non-date as key in removeActivity!`;
+  }
+  activity[0] = new Date(activity[0]);
+  for (let i = 0; i < activity.length; i++) {
+    if (!activity[i]) {
+      throw `Error: activity array is invalid in removeActivity!`;
+    }
+  }
+
+  // Everything looks good, add the activity to the user
+  const updateStatus = await userCollection.updateOne(
+    { _id: userObj },
+    { $pull: { pastActivities: activity } }
   );
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
@@ -285,6 +325,7 @@ module.exports = {
   createUser,
   setNewGoal,
   addNewActivity,
+  removeActivity,
   updateUser,
   deleteUser,
 };

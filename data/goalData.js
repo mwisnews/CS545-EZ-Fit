@@ -4,9 +4,6 @@ const Exercises = mongoCollections.Exercises;
 const Goals = mongoCollections.Goals;
 let { ObjectId } = require("mongodb");
 
-// TODO: Make target an object of {running: 3.1}
-// same for milestones
-
 /*
     HELPER FUNCTIONS TO CHECK USER INPUT 
 */
@@ -107,12 +104,17 @@ async function createGoal(
   let cleanUser = checkStr(userID);
   let cleanExercise = checkStr(exerciseType);
   let cleanDescription = checkStr(description);
-  let cleanTarget = parseFloat(target);
+  let cleanTarget = target;
   let cleanStart = Date.parse(startDate);
   let cleanEnd = Date.parse(endDate);
-  let cleanMilestones = [];
-  for (let i = 0; i < milestones.length; i++) {
-    cleanMilestones.push(parseFloat(milestones[i]));
+  let cleanMilestones = milestones;
+  // Check target is valid
+  if (!Array.isArray(cleanTarget)) {
+    throw `Error: Invalid target inputted in createGoal!`;
+  }
+  // Check milestones are valid
+  if (!Array.isArray(cleanMilestones)) {
+    throw `Error: Invalid milestones inputted in createGoal!`;
   }
   // Check dates are valid
   if (isNaN(cleanStart) || isNaN(cleanEnd)) {
@@ -174,15 +176,50 @@ async function addNewMilestone(goalID, milestone) {
     throw `Error: goalList does not exist in addNewMilestone!`;
   }
   // Check milestone
-  let cleanMilestone = parseInt(milestone);
-  if (isNaN(cleanMilestone)) {
-    throw `Error: milestone is not a number in addNewMilestone!`;
+  let cleanMilestone = milestone;
+  if (!Array.isArray(cleanMilestone)) {
+    throw `Error: milestone is not an array in addNewMilestone!`;
   }
 
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
     { _id: goalObj },
     { $push: { milestones: cleanMilestone } }
+  );
+  if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
+    throw "Error, update failed";
+  }
+
+  return getGoalByID(cleanGoal);
+}
+
+// Remove milestone function
+// Input: Goal ID, milestone to delete
+// Output: Returns goal object with updated milestones
+async function removeMilestone(goalID, milestone) {
+  // Error check
+  let cleanGoal = checkStr(goalID);
+  let goalObj;
+  try {
+    goalObj = ObjectId(cleanGoal);
+  } catch (e) {
+    throw e;
+  }
+  const goalCollection = await Goals;
+  const goalList = await goalCollection.findOne({ _id: goalObj });
+  if (goalList.length === 0) {
+    throw `Error: goalList does not exist in removeMilestone!`;
+  }
+  // Check milestone
+  let cleanMilestone = milestone;
+  if (!Array.isArray(cleanMilestone)) {
+    throw `Error: milestone is not an array in removeMilestone!`;
+  }
+
+  // Everything looks good, add the activity to the user
+  const updateStatus = await goalCollection.updateOne(
+    { _id: goalObj },
+    { $pull: { milestones: cleanMilestone } }
   );
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
@@ -216,10 +253,10 @@ async function updateGoal(goalID, updatedGoal) {
   }
 
   if (updatedGoal.target && updatedGoal.target !== goalToBeUpdated.target) {
-    if (isNaN(parseFloat(updatedGoal.target))) {
-      throw `Error: Passed invalid target to updateGoal, must be number!`;
+    if (!Array.isArray(updatedGoal.target)) {
+      throw `Error: Passed invalid target to updateGoal, must be an Array!`;
     }
-    updateObj.target = parseFloat(updatedGoal.target);
+    updateObj.target = updatedGoal.target;
   }
 
   if (
@@ -285,6 +322,7 @@ module.exports = {
   getGoalByUser,
   createGoal,
   addNewMilestone,
+  removeMilestone,
   updateGoal,
   deleteGoal,
 };

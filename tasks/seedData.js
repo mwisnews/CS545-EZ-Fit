@@ -77,11 +77,17 @@ const main = async () => {
     maxID,
     "Cardio",
     "Training for a 5K",
-    3.1,
+    ["Running", 3.1],
     "7/1/2021",
     "7/15/2021",
     true,
-    [1, 1.5, 2, 2.5, 3]
+    [
+      ["Running", 1],
+      ["Running", 1.5],
+      ["Running", 2],
+      ["Running", 2.5],
+      ["Running", 3],
+    ]
   );
   console.log(goal1);
 
@@ -89,16 +95,28 @@ const main = async () => {
     maxID,
     "Weightlifting",
     "Upper body strength training",
-    135,
+    ["Bench Press", 135],
     "7/15/2021",
     "8/31/2021",
     false,
-    [80, 90, 100, 110, 120, 135]
+    [
+      ["Bench Press", 80],
+      ["Bench Press", 90],
+      ["Bench Press", 100],
+      ["Bench Press", 110],
+      ["Bench Press", 120],
+      ["Bench Press", 135],
+    ]
   );
   console.log(goal2);
 
   // Edit goals
-  console.log(await goals.addNewMilestone(goal2._id.toString(), 130));
+  console.log(
+    await goals.addNewMilestone(goal2._id.toString(), ["Bench Press", 130])
+  );
+  console.log(
+    await goals.removeMilestone(goal2._id.toString(), ["Bench Press", 130])
+  );
   console.log(
     await goals.updateGoal(goal2._id.toString(), {
       description: "Upper body strength training through bench press",
@@ -120,24 +138,45 @@ const main = async () => {
   // Add activities to Max
   // Activity should be like { Date: [ Goal ID, Exercise Amount, Comments ], ... }
   console.log(
-    await users.addNewActivity(maxID, {
-      "7/15/2021": [goal2._id.toString(), 75, "Started bench press"],
-    })
+    await users.addNewActivity(maxID, [
+      "7/15/2021",
+      goal2._id.toString(),
+      ["Bench Press", 75],
+      "Started bench press",
+    ])
   );
   console.log(
-    await users.addNewActivity(maxID, {
-      "7/16/2021": [goal2._id.toString(), 80, "Hit first milestone :)"],
-    })
+    await users.addNewActivity(maxID, [
+      "7/16/2021",
+      goal2._id.toString(),
+      ["Bench Press", 80],
+      "Hit first milestone :)",
+    ])
   );
   console.log(
-    await users.addNewActivity(maxID, {
-      "7/18/2021": [goal2._id.toString(), 90, "Hit second milestone :)"],
-    })
+    await users.addNewActivity(maxID, [
+      "7/18/2021",
+      goal2._id.toString(),
+      ["Bench Press", 90],
+      "Hit second milestone :)",
+    ])
   );
   console.log(
-    await users.addNewActivity(maxID, {
-      "7/19/2021": [goal2._id.toString(), 80, "Not the best lifting day :("],
-    })
+    await users.addNewActivity(maxID, [
+      "7/19/2021",
+      goal2._id.toString(),
+      ["Bench Press", 80],
+      "Not the best lifting day :(",
+    ])
+  );
+
+  console.log(
+    await users.removeActivity(maxID, [
+      "7/19/2021",
+      goal2._id.toString(),
+      ["Bench Press", 80],
+      "Not the best lifting day :(",
+    ])
   );
 
   console.log("Done seeding collections for EZ-Fit");
