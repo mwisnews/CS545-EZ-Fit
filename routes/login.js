@@ -23,6 +23,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/home", async (req, res) => {
+  try {
+    res.render("pages/home", { title: "Home Page" });
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 router.get("/newUser", async (req, res) => {
   try {
     res.render("pages/newUser", { title: "Sign Up" });
@@ -30,6 +39,20 @@ router.get("/newUser", async (req, res) => {
     console.log(e);
     res.sendStatus(500);
   }
+});
+router.post("/newUser", async (req, res) => {
+  try{
+    res.render("pages/home", { title: "Home Page"});
+  } catch (e){
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+//DEV FOR LOGOUT
+router.get("/logout", async (req, res) => {
+  req.session.destroy();
+  res.render("pages/logout", { title: "Log Out" });
 });
 
 router.use(async (req, res, next) => {
@@ -40,10 +63,5 @@ router.use(async (req, res, next) => {
   }
 });
 
-//DEV FOR LOGOUT
-router.get("/logout", async (req, res) => {
-  req.session.destroy();
-  res.render("pages/logout", { title: "Log Out" });
-});
 
 module.exports = router;

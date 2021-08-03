@@ -1,0 +1,44 @@
+<div id="newUserTexts">
+    <h1 id="newUserWelcome">Sign Up for EZ-Fit</h1>
+    <br>
+    <h2 id="newUserPrompt">Please fill out the form below and click Register.</h2>
+</div>
+<div id="newUserFormDiv">
+    <form method="POST" id="newUserForm">
+        <div class="form-group">
+            <label for="firstNameBox">Please enter your first name</label>
+            <input type="text" name="firstName" id="firstNameBox" placeholder="First Name" class="form-control" required
+                value="{{firstName}}">
+        </div>
+
+        <div class="form-group">
+            <label for="lastNameBox">Please enter your last name</label>
+            <input type="text" name="lastName" id="lastNameBox" placeholder="Last Name" class="form-control" required
+                value="{{lastName}}">
+        </div>
+
+        <div class="form-group">
+            <label for="emailBox">Please enter your email</label>
+            <input type="email" name="email" id="emailBox" placeholder="Email" class="form-control" required
+                value="{{email}}">
+        </div>
+
+        <div class="form-group">
+            <label for="passwordBox1">Please enter a password</label>
+            <input type="password" name="password" id="passwordBox1" placeholder="Password" class="form-control"
+                required value="{{password}}">
+        </div>
+
+        <div class="form-group">
+            <label for="passwordBox2">Please re-enter your password</label>
+            <input type="password" name="passwordConfirm" id="passwordBox2" placeholder="Confirm Password"
+                class="form-control" required value="{{passwordConfirm}}">
+        </div>
+        <br>
+        <button id="newUserSubmitBtn" type="submit" class="btn btn-primary">Register</button>
+
+        <p class="error">{{error}}</p>
+    </form>
+    <br>
+    <a href="/">Already a User? Sign in Here!</a>
+</div>

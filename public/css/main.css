@@ -33,9 +33,9 @@ a {
   font-size: 16px;
 }
 
-.logout-link {
+/*.logout-link {
   display: none;
-}
+}*/
 
 .goals .goal-stat-row {
   display: flex;
