@@ -1,38 +1,60 @@
 .bg-primary{
-    color:black;
+  color:black;
 }
 
 .site-header {
-    display: flex;
-    padding: 15px;
-    justify-content: space-between;
-    align-items: center;
-    color: black;
-  }
-  
-  .site-header a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .site-header h1 {
-    margin: 0;
-  }
-  
-  .error {
-    color: red;
-    font-size: 16px;
-    margin: 16px 0;
-  }
-  
-  .container-fluid {
-    padding: 15px;
-  }
-  
-  a {
-    font-size: 16px;
-  }
-  
-  .logout-link {
-    display: none;
-  }
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.site-header a {
+  color: white;
+  text-decoration: none;
+}
+
+.site-header h1 {
+  margin: 0;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+.container-fluid {
+  padding: 15px;
+}
+
+a {
+  font-size: 16px;
+}
+
+.logout-link {
+  display: none;
+}
+
+.goals .goal-stat-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.goals .goal {
+  padding: 10px 30px;
+}
+.goals .goal-completed-true {
+  background: #d3d3ff;
+}
+.goals .goal-completed-true {
+  background: #d3d3ff;
+}
+.goals .goal-completed-false {
+  background: #ffd3e7;
+}
+.goals .new-goal-form input, .goals .new-goal-form textarea {
+  display: block;
+}

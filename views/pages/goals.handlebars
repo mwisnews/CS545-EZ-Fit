@@ -1,0 +1,68 @@
+<div class="goals">
+  <h2>
+    Goals
+  </h2>
+  <div class="goal-list">
+    {{#each userGoals}}  
+      <div class="goal goal-completed-{{completed}}">
+        <!-- <p class="goal-_id">{{_id}}</p> -->
+        <!-- <p class="goal-userID">{{userID}}</p> -->
+        <div class="goal-stat-row">
+          <p class="goal-exerciseType">{{exerciseType}}</p>
+          <p class="goal-description">{{description}}</p>
+          <p class="goal-target">{{target}}</p>
+        </div>
+        <div class="goal-stat-row">
+          <p class="goal-startDate">{{startDate}}</p>
+          <p class="goal-endDate">{{endDate}}</p>
+        </div>
+        <p class="goal-milestones">{{milestones}}</p>
+      </div>
+    {{/each}}
+  </div>
+
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#newGoalForm" aria-expanded="false" aria-controls="newGoalForm">
+    New Goal
+  </button>
+
+  <div class="collapse" id="newGoalForm">
+    <div class="card card-body">
+      <form action="/goals" method="POST" class="new-goal-form">
+
+        <label for="exerciseType">Excercise Type</label>
+        <input type="text" name="exerciseType" placeholder="Running"/>
+
+        <label for="description">Description</label>
+        <textarea name="description" placeholder="Description"></textarea>
+
+        <label for="target">Target Number</label>
+        <input type="text" name="target" placeholder="123"/>
+
+        <label for="startDate">Start Date</label>
+        <input type="text" name="startDate" placeholder="01/01/1970"/>
+
+        <label for="endDate">Target Completion Date</label>
+        <input type="text" name="endDate" placeholder="01/01/1970"/>
+
+        <label for="milestones">Milestones</label>
+        <input type="text" name="milestones" placeholder="milestones"/>
+
+
+        <button type="submit">Add New Goal</button>
+      </form>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
