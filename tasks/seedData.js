@@ -169,6 +169,14 @@ const main = async () => {
       "Not the best lifting day :(",
     ])
   );
+  console.log(
+    await users.addNewActivity(maxID, [
+      "7/22/2021",
+      goal1._id.toString(),
+      ["Running", 2.5],
+      "Ran a lot!!",
+    ])
+  );
 
   console.log(
     await users.removeActivity(maxID, [
