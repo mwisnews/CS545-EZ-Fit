@@ -5,6 +5,14 @@ const trim = (str) => (str || "").trim();
 
 router.get("/", async (req, res) => res.redirect("/login"));
 
+router.get("/home", async (req, res) => {
+  if (!req.session.userID) {
+    res.redirect("/login");
+  } else {
+    res.render("pages/home", { title: "Home Page" });
+  }
+});
+
 router.get("/login", async (req, res) => {
   try {
     res.render("pages/login", { title: "Login" });
@@ -33,10 +41,10 @@ router.get("/newUser", async (req, res) => {
 });
 
 router.use(async (req, res, next) => {
-  if (!req.session.user) {
+  if (!req.session.userID) {
     res.redirect("/login");
   } else {
-    next();
+    res.render("pages/home", { title: "Home Page" });
   }
 });
 

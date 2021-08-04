@@ -4,9 +4,11 @@ const userRoutes = require("./users");
 
 const goalsRoutes = require("./goals");
 
+const graphRoutes = require("./graph");
 
 const constructorMethod = (app) => {
   app.use("/goals", goalsRoutes);
+  app.use("/graph", graphRoutes);
   app.use("/users", userRoutes);
   app.use("/", loginRoutes);
 

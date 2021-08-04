@@ -1,0 +1,12 @@
+<label for="workout">Choose a workout type:</label>
+
+<select name="workout" id="workout">
+    {{#each workoutList}}
+        <option value="{{this}}">{{this}}</option>
+    {{/each}}
+    <option value="All" selected>All</option>
+</select>
+<div id="chartContainer" style="height: 500px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="../../public/js/lineGraph.js"></script>
