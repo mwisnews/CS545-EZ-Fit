@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const userData = require("../data/userData");
 
 const trim = (str) => (str || "").trim();
 
@@ -24,7 +25,11 @@ router.get("/login", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    res.render("pages/home", { title: "Home Page" });
+    // Call the new login function
+    userData.newLogin(req.session.userID);
+    // Get user information and pass into the template
+    const userInfo = await userData.getUserByID(req.session.userID);
+    res.render("pages/home", { title: "Home Page", userInfo: userInfo });
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
@@ -49,9 +54,9 @@ router.get("/newUser", async (req, res) => {
   }
 });
 router.post("/newUser", async (req, res) => {
-  try{
-    res.render("pages/home", { title: "Home Page"});
-  } catch (e){
+  try {
+    res.render("pages/home", { title: "Home Page" });
+  } catch (e) {
     console.log(e);
     res.sendStatus(500);
   }
@@ -70,6 +75,5 @@ router.use(async (req, res, next) => {
     res.render("pages/home", { title: "Home Page" });
   }
 });
-
 
 module.exports = router;

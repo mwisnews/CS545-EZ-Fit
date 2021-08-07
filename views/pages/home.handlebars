@@ -2,6 +2,12 @@
   <h2>
     Your Personal Calendar:
   </h2>
+  {{#greaterThanOne userInfo.consecutiveDays}}
+    <h3>You have been using EZ-Fit for the past {{userInfo.consecutiveDays}} days! Keep up the good work!</h3>
+  {{else}}
+    <h3>You have been using EZ-Fit for the past {{userInfo.consecutiveDays}} day! We hope to see you back soon!</h3>
+  {{/greaterThanOne}}
+  <h4>Double click any date to add a new activity!</h4>
   <a href="/goals" style="text-align:right;">Add a new goal!</a>
   <h3><a href="/graph/line">Line Graph</a></h3>
   <h3 id="calendarMonth" style="text-align:center;"></h3>

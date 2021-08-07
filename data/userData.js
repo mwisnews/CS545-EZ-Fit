@@ -1,4 +1,5 @@
 const mongoCollections = require("../config/mongoCollections");
+const GoalData = require("../data/goalData");
 const Users = mongoCollections.Users;
 const Goals = mongoCollections.Goals;
 let { ObjectId } = require("mongodb");
@@ -94,6 +95,8 @@ async function createUser(
       currentGoal: "",
       pastGoals: [],
       pastActivities: [],
+      lastLogin: new Date(),
+      consecutiveDays: 1,
     };
   } else {
     newUser = {
@@ -104,6 +107,8 @@ async function createUser(
       currentGoal: "",
       pastGoals: [],
       pastActivities: [],
+      lastLogin: new Date(),
+      consecutiveDays: 1,
     };
   }
 
@@ -115,6 +120,58 @@ async function createUser(
 
   const addedUser = await getUserByID(insertInfo.insertedId.toString());
   return addedUser;
+}
+
+// Date comparison helper function
+function daysBetween(first, second) {
+  // Copy date parts of the timestamps, discarding the time parts.
+  var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+  var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+
+  // Do the math.
+  var millisecondsPerDay = 1000 * 60 * 60 * 24;
+  var millisBetween = two.getTime() - one.getTime();
+  var days = millisBetween / millisecondsPerDay;
+
+  // Round down.
+  return Math.floor(days);
+}
+
+// New login function to increment consecutive Days if needed
+// Input: User ID
+// Output: Returns new user
+async function newLogin(userID) {
+  // Error check
+  let cleanUser = checkStr(userID);
+  try {
+    userObj = ObjectId(cleanUser);
+  } catch (e) {
+    throw e;
+  }
+  const userCollection = await Users;
+  const userList = await userCollection.findOne({ _id: userObj });
+  if (userList.length === 0) {
+    throw `Error: User does not exist in newLogin!`;
+  }
+  // If today's date is 1 day greater than lastLogin, increment consecutiveDays
+  // and set the new lastLogin
+  const lastLogin = userList.lastLogin;
+  let updateStatus;
+  const dayDifference = daysBetween(lastLogin, new Date());
+  if (dayDifference >= 1 && dayDifference < 2) {
+    updateStatus = await userCollection.updateOne(
+      { _id: userObj },
+      { $set: { lastLogin: new Date() }, $inc: { consecutiveDays: 1 } }
+    );
+  }
+  // If today's login is not the day after, reset consecutiveDays to 1
+  else if (dayDifference >= 2) {
+    updateStatus = await userCollection.updateOne(
+      { _id: userObj },
+      { $set: { lastLogin: new Date() }, $set: { consecutiveDays: 1 } }
+    );
+  }
+  return getUserByID(userID);
 }
 
 // Set new goal function
@@ -180,7 +237,7 @@ async function addNewActivity(userID, activity) {
   if (userList.length === 0) {
     throw `Error: User does not exist in addNewActivity!`;
   }
-  // Activity should be like [ [ Date, Goal ID, [Execise Type, Exercise Amount], Comments ], ... ]
+  // Activity should be like [ [ Date, Goal ID, [Execise Type, Exercise Amount], Comments, Achievement ], ... ]
   if (!activity || !Array.isArray(activity)) {
     throw `Error: activity is invalid in addNewActivity`;
   }
@@ -192,6 +249,44 @@ async function addNewActivity(userID, activity) {
     if (!activity[i]) {
       throw `Error: activity array is invalid in addNewActivity!`;
     }
+  }
+
+  // Populate the activity with if it hit a milestone or not
+  // Get the goal it is attached to
+  const goalID = activity[1];
+  const goalObj = ObjectId(goalID);
+  const goalCollection = await Goals;
+  const goalInfo = await goalCollection.findOne({ _id: goalObj });
+  console.log(goalInfo);
+
+  // Find the milestones
+  const milestones = goalInfo.milestones;
+  console.log(milestones);
+
+  // Check if the new activity hit a milestone, if it did, mark the milestone to true
+  let achievementFound = false;
+  for (let i = 0; i < milestones.length; i++) {
+    const currMilestone = milestones[i];
+    const milestoneType = currMilestone[0][0];
+    const milestoneTarget = currMilestone[0][1];
+    const milestoneHit = currMilestone[1];
+    const activityType = activity[2][0];
+    const activityNumber = activity[2][1];
+    // Compare the same activity exercise with milestone exercise's milestone which has not been reached yet
+    if (milestoneType === activityType && !milestoneHit) {
+      // If the activity is greater than a milestone, mark it as an achievement
+      if (activityNumber >= milestoneTarget) {
+        if (!achievementFound) {
+          activity.push(true);
+        }
+        achievementFound = true;
+        // We also need to set the milestone to true in Goals collection
+        await GoalData.hitMilestone(goalID, currMilestone);
+      }
+    }
+  }
+  if (!achievementFound) {
+    activity.push(false);
   }
 
   // Everything looks good, add the activity to the user
@@ -328,4 +423,5 @@ module.exports = {
   removeActivity,
   updateUser,
   deleteUser,
+  newLogin,
 };

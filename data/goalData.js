@@ -107,7 +107,13 @@ async function createGoal(
   let cleanTarget = target;
   let cleanStart = Date.parse(startDate);
   let cleanEnd = Date.parse(endDate);
-  let cleanMilestones = milestones;
+  let cleanMilestones = [];
+
+  // Populate each milestone as not achieved
+  for (let i = 0; i < milestones.length; i++) {
+    cleanMilestones.push([milestones[i], false]);
+  }
+
   // Check target is valid
   if (!Array.isArray(cleanTarget)) {
     throw `Error: Invalid target inputted in createGoal!`;
@@ -176,7 +182,7 @@ async function addNewMilestone(goalID, milestone) {
     throw `Error: goalList does not exist in addNewMilestone!`;
   }
   // Check milestone
-  let cleanMilestone = milestone;
+  let cleanMilestone = [milestone, false];
   if (!Array.isArray(cleanMilestone)) {
     throw `Error: milestone is not an array in addNewMilestone!`;
   }
@@ -186,6 +192,53 @@ async function addNewMilestone(goalID, milestone) {
     { _id: goalObj },
     { $push: { milestones: cleanMilestone } }
   );
+  if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
+    throw "Error, update failed";
+  }
+
+  return getGoalByID(cleanGoal);
+}
+
+// Hit milestone function
+// Input: Goal ID, milestone to set to true
+// Output: Returns goal object with updated milestones
+async function hitMilestone(goalID, milestone) {
+  // Error check
+  let cleanGoal = checkStr(goalID);
+  let goalObj;
+  try {
+    goalObj = ObjectId(cleanGoal);
+  } catch (e) {
+    throw e;
+  }
+  const goalCollection = await Goals;
+  const goalList = await goalCollection.findOne({ _id: goalObj });
+  if (goalList.length === 0) {
+    throw `Error: goalList does not exist in removeMilestone!`;
+  }
+  // Check milestone
+  let cleanMilestone = milestone;
+  if (!Array.isArray(cleanMilestone)) {
+    throw `Error: milestone is not an array in removeMilestone!`;
+  }
+
+  // Everything looks good, get the old milestones and reset it with a true value
+  let updatedMilestones = goalList.milestones;
+  for (let i = 0; i < updatedMilestones.length; i++) {
+    let currMilestone = updatedMilestones[i];
+    if (currMilestone[0].toString() === cleanMilestone[0].toString()) {
+      updatedMilestones[i][1] = true;
+      console.log(updatedMilestones);
+      break;
+    }
+  }
+
+  // Set the new milestone array
+  const updateStatus = await goalCollection.updateOne(
+    { _id: goalObj },
+    { $set: { milestones: updatedMilestones } }
+  );
+
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
   }
@@ -323,6 +376,7 @@ module.exports = {
   createGoal,
   addNewMilestone,
   removeMilestone,
+  hitMilestone,
   updateGoal,
   deleteGoal,
 };

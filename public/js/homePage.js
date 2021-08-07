@@ -4,6 +4,17 @@
   let lastMonthButton = $("#lastMonth");
   let nextMonthButton = $("#nextMonth");
 
+  // Hide buttons
+  document.getElementById("calendar").addEventListener("click", hideButtons);
+  function hideButtons() {
+    var buttons = document.getElementsByClassName(
+      "tui-full-calendar-section-button"
+    )[0];
+    if (buttons) {
+      buttons.style.display = "none";
+    }
+  }
+
   var calendar = new Calendar("#calendar", {
     defaultView: "month",
     taskView: true,
@@ -14,7 +25,19 @@
       startDayOfWeek: 0,
       narrowWeekend: false,
     },
-    isReadOnly: true,
+    isReadOnly: false,
+  });
+
+  // On calendar double click, redirect to add new activity
+  calendar.on("beforeCreateSchedule", function (event) {
+    event.guide.clearGuideElement();
+    // Check if it was a double click
+    if (event.triggerEventName === "dblclick") {
+      // Send request to add new activity page with the given date
+      const selectedDate = event.start._date;
+      // TODO
+      console.log(`Making call for date ${selectedDate}...`);
+    }
   });
 
   const monthNames = [
@@ -46,14 +69,17 @@
       if (currentEventDetails.start._date.getMonth() !== currentMonth) {
         continue;
       }
-      // This is how to add a picture
-      let elem = document.createElement("img");
-      elem.setAttribute("height", "30px");
-      elem.setAttribute("width", "30px");
-      elem.style.marginTop = "5px";
-      elem.style.alignContent = "center";
-      elem.src = "public/images/trophy.png";
-      currentEvent.appendChild(elem);
+      // If the activity has a "true" field in the end then we add a trophy
+      if (responseMessage[i][4] === true) {
+        // This is how to add a picture
+        let elem = document.createElement("img");
+        elem.setAttribute("height", "30px");
+        elem.setAttribute("width", "30px");
+        elem.style.marginTop = "5px";
+        elem.style.alignContent = "center";
+        elem.src = "public/images/trophy.png";
+        currentEvent.appendChild(elem);
+      }
     }
   }
 
