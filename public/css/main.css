@@ -1,22 +1,148 @@
+/* Login page */
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Side Title and small text at bottom */
+#about {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  text-align: right;
+  max-width: 85%;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+#info .titleWrapper {
+  position: absolute;
+  top: 10rem;
+  left: calc(100% - 2rem);
+  transform-origin: 0% 0%;
+  transform: rotate(90deg);
+  color: transparent;
+  -webkit-text-stroke: 2px #0026ff;
+}
+
+#info .title {
+  position: relative;
+  font-size: 9vmax;
+  line-height: 1.3;
+  white-space: nowrap;
+  font-weight: 700;
+  text-align: center;
+  text-indent: -1%;
+}
+
+#info .line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 12px;
+  width: 100%;
+  background: #030303;
+}
+
+/* Input Log In bars */
+.login-body {
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+
+#loginWelcome, #newUserPrompt {
+  color:#000000;    
+  text-shadow: 1px 0 #888888;
+  letter-spacing:.5px;
+  font-weight:bold;
+}
+
+#newUserTexts {
+  font-family: 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+
+label{
+  text-align: center;
+}
+
+#passwordLogin, #emailLogin, #firstNameBox, #lastNameBox, #emailBox, #passwordBox1, #passwordBox2 {
+  width: 20%;
+  padding: 5px;
+  text-align: center;
+  block-size: 30px;
+  border-style: none none solid none;
+  outline: none;
+  background: none;
+  font-family: 'Trebuchet MS', sans-serif;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* Buttons */
+#loginBtn, #newUserSubmitBtn {
+  background-color: rgb(103, 172, 252);
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 5px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+#loginBtn:hover , #newUserSubmitBtn:hover{
+  color: rgb(255, 253, 253);
+  background: rgb(0, 67, 145);
+}
+
 .bg-primary{
-  color:black;
+  color:rgb(0, 0, 0);
+  
 }
 
 .site-header {
+  margin:0px;
+  margin-top:60px;
+  padding: 0px;
+}
+
+nav{
   display: flex;
-  padding: 15px;
-  justify-content: space-between;
-  align-items: center;
-  color: black;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgb(251, 255, 196);
+  overflow: auto;
+  height: 60px;
 }
 
-.site-header a {
-  color: white;
+.left-links{
+  flex:1 1 200px;
+}
+
+.links {
+  display: inline-block;
+  text-align: center;
+  padding: 14px;
+  color: #0026ff;
   text-decoration: none;
+  font-size: 17px;
+  font-weight: bolder;
 }
 
-.site-header h1 {
-  margin: 0;
+.links:hover {
+  border-bottom: 5px solid #0026ff;
+}
+
+.selected {
+  border-bottom: 5px solid #0026ff;
 }
 
 .error {
@@ -32,6 +158,8 @@
 a {
   font-size: 16px;
 }
+
+
 
 /*.logout-link {
   display: none;
