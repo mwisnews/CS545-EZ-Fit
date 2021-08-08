@@ -6,6 +6,7 @@
 
 .goal {
   padding: 10px 30px;
+  margin-bottom: 4px;
 }
 .goal-completed-true {
   background: #d3d3ff;
@@ -46,8 +47,7 @@
   padding: 1.5rem !important
 }
 
-.block,
-.card {
+.block {
   width: min-content;
   background: #ffffff30;
   border-width: 0;
@@ -182,4 +182,8 @@
 
 .b-incomplete {
   border-color: #f54394 !important
+}
+
+.milestone {
+  display: flex;
 }

@@ -44,7 +44,7 @@
 
   <div class="collapse" id="newGoalForm">
     <div class="card card-body">
-      <form action="/goals" method="POST" class="new-goal-form">
+      <form id="newgoal-form" action="/goals" method="POST" class="new-goal-form">
 
         <label for="exerciseType">Excercise Type</label>
         <input type="text" name="exerciseType" placeholder="Running"/>
@@ -53,10 +53,10 @@
         <textarea name="description" placeholder="Description"></textarea>
 
         <label for="target">Target Activity</label>
-        <input type="text" name="target" placeholder="Bench Press"/>
+        <input type="text" name="target_activity" placeholder="Bench Press"/>
 
         <label for="target">Target Number</label>
-        <input type="number" name="target" placeholder="123"/>
+        <input type="number" name="target_number" placeholder="123"/>
 
         <label for="startDate">Start Date</label>
         <input type="text" name="startDate" placeholder="01/01/1970"/>
@@ -64,25 +64,19 @@
         <label for="endDate">Target Completion Date</label>
         <input type="text" name="endDate" placeholder="01/01/1970"/>
 
-        <label for="milestones">Milestones</label>
-        <input type="text" name="milestones" placeholder="milestones"/>
+        <label>Milestones</label>
+        <div id="milestones">
+          <div class="milestone">
+            <input type="text" name="milestone_type_0" placeholder="Bench Press"/>
+            <input type="number" name="milestone_quant_0" placeholder="123"/>
+          </div>
+        </div>
 
-
+        <button type="button" onclick="addMilestone()">Add New Milestone</button>
         <button type="submit">Add New Goal</button>
       </form>
     </div>
   </div>
-
-
-
 </div>
 
-
-
-
-
-
-
-
-
-
+<script src="public/js/goals.js"></script>
