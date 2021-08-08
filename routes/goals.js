@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const goalData = require("../data/goalData")
+const goalData = require("../data/goalData");
 
 router.get("/", async (req, res) => {
   try {
     const userGoals = await goalData.getAllGoals();
-
-    res.render("pages/goals", { userGoals, stylesheets: ['/public/css/goals.css'] });
+    res.render("pages/goals", {
+      userGoals,
+      stylesheets: ["/public/css/goals.css"],
+    });
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
