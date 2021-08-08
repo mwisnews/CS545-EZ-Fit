@@ -11,7 +11,12 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/public/css/main.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+
+    {{#each stylesheets}}
+      <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
     <!-- If you use the default popups, use this. -->
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />

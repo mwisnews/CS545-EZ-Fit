@@ -19,7 +19,21 @@
           <p class="goal-startDate">{{startDate}}</p>
           <p class="goal-endDate">{{endDate}}</p>
         </div>
-        <p class="goal-milestones">{{milestones}}</p>
+        <div class="goal-milestones">
+          <div class="timeline p-4 block mb-4">
+            
+            {{#each milestones}}
+              <div class="tl-item">
+                <div class="tl-dot {{#if completed}}b-complete{{else}}b-incomplete{{/if}}"></div>
+                <div class="tl-content">
+                  <div class="">{{value.[0]}}</div>
+                  <div class="tl-date text-muted mt-1">{{value.[1]}}</div>
+                </div>
+              </div>
+            {{/each}}
+            
+          </div>
+        </div>
       </div>
     {{/each}}
   </div>
@@ -38,8 +52,11 @@
         <label for="description">Description</label>
         <textarea name="description" placeholder="Description"></textarea>
 
+        <label for="target">Target Activity</label>
+        <input type="text" name="target" placeholder="Bench Press"/>
+
         <label for="target">Target Number</label>
-        <input type="text" name="target" placeholder="123"/>
+        <input type="number" name="target" placeholder="123"/>
 
         <label for="startDate">Start Date</label>
         <input type="text" name="startDate" placeholder="01/01/1970"/>

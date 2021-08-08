@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   try {
     const userGoals = await goalData.getAllGoals();
 
-    res.render("pages/goals", { userGoals });
+    res.render("pages/goals", { userGoals, stylesheets: ['/public/css/goals.css'] });
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

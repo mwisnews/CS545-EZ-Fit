@@ -267,9 +267,9 @@ async function addNewActivity(userID, activity) {
   let achievementFound = false;
   for (let i = 0; i < milestones.length; i++) {
     const currMilestone = milestones[i];
-    const milestoneType = currMilestone[0][0];
-    const milestoneTarget = currMilestone[0][1];
-    const milestoneHit = currMilestone[1];
+    const milestoneType = currMilestone['value'][0];
+    const milestoneTarget = currMilestone['value'][1];
+    const milestoneHit = currMilestone['completed'];
     const activityType = activity[2][0];
     const activityNumber = activity[2][1];
     // Compare the same activity exercise with milestone exercise's milestone which has not been reached yet
@@ -281,7 +281,7 @@ async function addNewActivity(userID, activity) {
         }
         achievementFound = true;
         // We also need to set the milestone to true in Goals collection
-        await GoalData.hitMilestone(goalID, currMilestone);
+        await GoalData.hitMilestone(goalID, i);
       }
     }
   }
