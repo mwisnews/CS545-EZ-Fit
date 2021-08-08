@@ -120,7 +120,7 @@ const main = async () => {
     await goals.addNewMilestone(goal2._id.toString(), ["Bench Press", 130])
   );
   console.log(
-    await goals.removeMilestone(goal2._id.toString(), ["Bench Press", 130])
+    await goals.removeMilestone(goal2._id.toString(), goal2.milestones.length)
   );
   console.log(
     await goals.updateGoal(goal2._id.toString(), {

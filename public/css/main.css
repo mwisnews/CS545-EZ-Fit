@@ -36,25 +36,3 @@ a {
 /*.logout-link {
   display: none;
 }*/
-
-.goals .goal-stat-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.goals .goal {
-  padding: 10px 30px;
-}
-.goals .goal-completed-true {
-  background: #d3d3ff;
-}
-.goals .goal-completed-true {
-  background: #d3d3ff;
-}
-.goals .goal-completed-false {
-  background: #ffd3e7;
-}
-.goals .new-goal-form input, .goals .new-goal-form textarea {
-  display: block;
-}

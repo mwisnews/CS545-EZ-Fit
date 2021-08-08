@@ -111,7 +111,7 @@ async function createGoal(
 
   // Populate each milestone as not achieved
   for (let i = 0; i < milestones.length; i++) {
-    cleanMilestones.push([milestones[i], false]);
+    cleanMilestones.push({'value': milestones[i], 'completed': false});
   }
 
   // Check target is valid
@@ -182,10 +182,7 @@ async function addNewMilestone(goalID, milestone) {
     throw `Error: goalList does not exist in addNewMilestone!`;
   }
   // Check milestone
-  let cleanMilestone = [milestone, false];
-  if (!Array.isArray(cleanMilestone)) {
-    throw `Error: milestone is not an array in addNewMilestone!`;
-  }
+  let cleanMilestone = {'value': milestone, 'completed': false};
 
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
@@ -200,9 +197,9 @@ async function addNewMilestone(goalID, milestone) {
 }
 
 // Hit milestone function
-// Input: Goal ID, milestone to set to true
+// Input: Goal ID, milestone index to set to true
 // Output: Returns goal object with updated milestones
-async function hitMilestone(goalID, milestone) {
+async function hitMilestone(goalID, index) {
   // Error check
   let cleanGoal = checkStr(goalID);
   let goalObj;
@@ -216,21 +213,11 @@ async function hitMilestone(goalID, milestone) {
   if (goalList.length === 0) {
     throw `Error: goalList does not exist in removeMilestone!`;
   }
-  // Check milestone
-  let cleanMilestone = milestone;
-  if (!Array.isArray(cleanMilestone)) {
-    throw `Error: milestone is not an array in removeMilestone!`;
-  }
 
   // Everything looks good, get the old milestones and reset it with a true value
   let updatedMilestones = goalList.milestones;
-  for (let i = 0; i < updatedMilestones.length; i++) {
-    let currMilestone = updatedMilestones[i];
-    if (currMilestone[0].toString() === cleanMilestone[0].toString()) {
-      updatedMilestones[i][1] = true;
-      console.log(updatedMilestones);
-      break;
-    }
+  if (0 <= index && index < updatedMilestones.length) {
+    updatedMilestones[index].completed = true;
   }
 
   // Set the new milestone array
@@ -247,9 +234,9 @@ async function hitMilestone(goalID, milestone) {
 }
 
 // Remove milestone function
-// Input: Goal ID, milestone to delete
+// Input: Goal ID, milestone index to delete
 // Output: Returns goal object with updated milestones
-async function removeMilestone(goalID, milestone) {
+async function removeMilestone(goalID, index) {
   // Error check
   let cleanGoal = checkStr(goalID);
   let goalObj;
@@ -259,20 +246,17 @@ async function removeMilestone(goalID, milestone) {
     throw e;
   }
   const goalCollection = await Goals;
-  const goalList = await goalCollection.findOne({ _id: goalObj });
-  if (goalList.length === 0) {
-    throw `Error: goalList does not exist in removeMilestone!`;
-  }
-  // Check milestone
-  let cleanMilestone = milestone;
-  if (!Array.isArray(cleanMilestone)) {
-    throw `Error: milestone is not an array in removeMilestone!`;
-  }
+  const goal = await goalCollection.findOne({ _id: goalObj });
 
+  let updatedMilestones = goal.milestones;
+  if (0 <= index && index < updatedMilestones.length) {
+    updatedMilestones.splice(index, 1);
+  }
+  
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
     { _id: goalObj },
-    { $pull: { milestones: cleanMilestone } }
+    { $set: { milestones: updatedMilestones } }
   );
   if (!updateStatus.matchedCount && !updateStatus.modifiedCount) {
     throw "Error, update failed";
