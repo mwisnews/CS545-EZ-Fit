@@ -11,4 +11,17 @@ router.get("/activities", async (req, res) => {
   res.json(userActivities.pastActivities);
 });
 
+router.put("/deleteActivity", async (req, res) => {
+  try {
+    let activity = await userData.removeActivity(
+      req.session.userID,
+      req.body.activity
+    );
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

@@ -267,9 +267,9 @@ async function addNewActivity(userID, activity) {
   let achievementFound = false;
   for (let i = 0; i < milestones.length; i++) {
     const currMilestone = milestones[i];
-    const milestoneType = currMilestone['value'][0];
-    const milestoneTarget = currMilestone['value'][1];
-    const milestoneHit = currMilestone['completed'];
+    const milestoneType = currMilestone["value"][0];
+    const milestoneTarget = currMilestone["value"][1];
+    const milestoneHit = currMilestone["completed"];
     const activityType = activity[2][0];
     const activityNumber = activity[2][1];
     // Compare the same activity exercise with milestone exercise's milestone which has not been reached yet
@@ -319,7 +319,7 @@ async function removeActivity(userID, activity) {
     throw `Error: User does not exist in removeActivity!`;
   }
   // Activity should be like [ [ Date, Goal ID, [Execise Type, Exercise Amount], Comments ], ... ]
-  if (!activity || !Array.isArray(activity)) {
+  if (!activity) {
     throw `Error: activity is invalid in removeActivity`;
   }
   if (isNaN(Date.parse(activity[0]))) {
@@ -327,7 +327,7 @@ async function removeActivity(userID, activity) {
   }
   activity[0] = new Date(activity[0]);
   for (let i = 0; i < activity.length; i++) {
-    if (!activity[i]) {
+    if (!activity[i] && activity[i] !== false) {
       throw `Error: activity array is invalid in removeActivity!`;
     }
   }

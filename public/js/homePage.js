@@ -8,10 +8,16 @@
   document.getElementById("calendar").addEventListener("click", hideButtons);
   function hideButtons() {
     var buttons = document.getElementsByClassName(
-      "tui-full-calendar-section-button"
+      "tui-full-calendar-popup-edit"
+    )[0];
+    var line = document.getElementsByClassName(
+      "tui-full-calendar-popup-vertical-line"
     )[0];
     if (buttons) {
       buttons.style.display = "none";
+    }
+    if (line) {
+      line.style.display = "none";
     }
   }
 
@@ -40,6 +46,27 @@
     }
   });
 
+  // When user presses delete button, delete the activity
+  calendar.on("beforeDeleteSchedule", async function (e) {
+    // Find the activity to be deleted
+    let activityTitle = e.schedule.title;
+    let activityNumber = parseFloat(e.schedule.body.split("-")[0]);
+    let activityDate = e.schedule.start._date;
+    let toDelete, indexDelete;
+    toDelete = { activity: responseMessage[e.schedule.id] };
+    let response = await fetch("/../users/deleteActivity", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toDelete),
+    });
+    // Remove the activity from responseMessage
+    delete responseMessage[e.schedule.id];
+
+    calendar.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+    calendar.render(true);
+    reloadTrophies();
+  });
+
   const monthNames = [
     "January",
     "February",
@@ -62,15 +89,16 @@
   // Reload trophies function
   function reloadTrophies() {
     // Go through each event and see if we need to add an image in the box
-    for (let i = 0; i < responseMessage.length; i++) {
-      const currentEvent = calendar.getElement(i.toString(), "1");
-      const currentEventDetails = calendar.getSchedule(i.toString(), "1");
+    for (const [key, value] of Object.entries(responseMessage)) {
+      let currEvent = value;
+      const currentEvent = calendar.getElement(key.toString(), "1");
+      const currentEventDetails = calendar.getSchedule(key.toString(), "1");
       // If the activity isn't in the current month, continue
       if (currentEventDetails.start._date.getMonth() !== currentMonth) {
         continue;
       }
       // If the activity has a "true" field in the end then we add a trophy
-      if (responseMessage[i][4] === true) {
+      if (currEvent[4] === true) {
         // This is how to add a picture
         let elem = document.createElement("img");
         elem.setAttribute("height", "30px");
@@ -120,16 +148,17 @@
   $.ajax(requestConfig).then(function (response) {
     // Get all of the user's activities in an array
     responseMessage = response;
-    if (!Array.isArray(responseMessage)) {
-      return;
-    }
+    // Convert response message to an object with index values as keys
+    responseMessage = Object.assign({}, responseMessage);
+    console.log(responseMessage);
     // Iterate through the array and make the events
     allEvents = [];
-    for (let i = 0; i < responseMessage.length; i++) {
-      const workoutDate = responseMessage[i][0];
-      const workoutType = responseMessage[i][2][0];
-      const workoutDesc = responseMessage[i][2][1];
-      const workoutComment = responseMessage[i][3];
+    for (let i = 0; i < Object.keys(responseMessage).length; i++) {
+      let currWorkout = responseMessage[i];
+      const workoutDate = currWorkout[0];
+      const workoutType = currWorkout[2][0];
+      const workoutDesc = currWorkout[2][1];
+      const workoutComment = currWorkout[3];
       let pastEvent;
       pastEvent = {
         id: i.toString(),
