@@ -26,7 +26,7 @@ router.get("/login", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     // Call the new login function
-    userData.newLogin(req.session.userID);
+    await userData.newLogin(req.session.userID);
     // Get user information and pass into the template
     const userInfo = await userData.getUserByID(req.session.userID);
     res.render("pages/home", { title: "Home Page", userInfo: userInfo });

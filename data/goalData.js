@@ -27,7 +27,11 @@ function checkStr(str, param) {
 // Output: List of all goals
 async function getAllGoals() {
   const goalCollection = await Goals;
-  const goalList = await goalCollection.find({}).toArray();
+  let goalList = await goalCollection.find({}).toArray();
+  // Convert each ID to a string
+  for (let i = 0; i < goalList.length; i++) {
+    goalList[i]._id = goalList[i]._id.toString();
+  }
   return goalList;
 }
 
@@ -111,7 +115,7 @@ async function createGoal(
 
   // Populate each milestone as not achieved
   for (let i = 0; i < milestones.length; i++) {
-    cleanMilestones.push({'value': milestones[i], 'completed': false});
+    cleanMilestones.push({ value: milestones[i], completed: false });
   }
 
   // Check target is valid
@@ -182,7 +186,7 @@ async function addNewMilestone(goalID, milestone) {
     throw `Error: goalList does not exist in addNewMilestone!`;
   }
   // Check milestone
-  let cleanMilestone = {'value': milestone, 'completed': false};
+  let cleanMilestone = { value: milestone, completed: false };
 
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
@@ -252,7 +256,7 @@ async function removeMilestone(goalID, index) {
   if (0 <= index && index < updatedMilestones.length) {
     updatedMilestones.splice(index, 1);
   }
-  
+
   // Everything looks good, add the activity to the user
   const updateStatus = await goalCollection.updateOne(
     { _id: goalObj },
