@@ -1,5 +1,5 @@
-.bg-primary{
-  color:black;
+.bg-primary {
+  color: black;
 }
 
 .site-header {
@@ -31,6 +31,12 @@
 
 a {
   font-size: 16px;
+}
+
+/* Make the entire calendar with a clickable cursor */
+.tui-full-calendar-weekday-grid-line,
+.tui-full-calendar-near-month-day {
+  cursor: pointer;
 }
 
 /*.logout-link {
