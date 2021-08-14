@@ -5,7 +5,7 @@
   let nextMonthButton = $("#nextMonth");
 
   // Hide buttons
-  document.getElementById("calendar").addEventListener("click", hideButtons);
+  //document.getElementById("calendar").addEventListener("click", hideButtons);
   function hideButtons() {
     var buttons = document.getElementsByClassName(
       "tui-full-calendar-popup-edit"
@@ -65,6 +65,21 @@
     calendar.deleteSchedule(e.schedule.id, e.schedule.calendarId);
     calendar.render(true);
     reloadTrophies();
+  });
+
+  // When user presses edit button, edit the activity
+  calendar.on("beforeUpdateSchedule", async function (e) {
+    // Store all of the relevant information in localStorage for fetching
+    console.log(e);
+    const exerciseAmount = e.schedule.body.split("-")[0];
+    const exerciseDesc = e.schedule.body.split("-")[1];
+    localStorage.setItem("activityDate", e.schedule.start._date);
+    localStorage.setItem("activityType", e.schedule.title);
+    localStorage.setItem("activityAmount", exerciseAmount);
+    localStorage.setItem("activityDesc", exerciseDesc);
+    localStorage.setItem("oldActivity", responseMessage[e.schedule.id]);
+
+    window.location.replace("/users/editActivity");
   });
 
   const monthNames = [

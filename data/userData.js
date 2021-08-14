@@ -245,6 +245,7 @@ async function addNewActivity(userID, activity) {
     throw `Error: activity has non-date as key in addNewActivity!`;
   }
   activity[0] = new Date(activity[0]);
+  activity[0].setDate(activity[0].getDate() + 1);
   for (let i = 0; i < activity.length; i++) {
     if (!activity[i]) {
       throw `Error: activity array is invalid in addNewActivity!`;
@@ -257,11 +258,11 @@ async function addNewActivity(userID, activity) {
   const goalObj = ObjectId(goalID);
   const goalCollection = await Goals;
   const goalInfo = await goalCollection.findOne({ _id: goalObj });
-  console.log(goalInfo);
+  //console.log(goalInfo);
 
   // Find the milestones
   const milestones = goalInfo.milestones;
-  console.log(milestones);
+  //console.log(milestones);
 
   // Check if the new activity hit a milestone, if it did, mark the milestone to true
   let achievementFound = false;
