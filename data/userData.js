@@ -270,11 +270,10 @@ async function addNewActivity(userID, activity) {
     const currMilestone = milestones[i];
     const milestoneType = currMilestone["value"][0];
     const milestoneTarget = currMilestone["value"][1];
-    const milestoneHit = currMilestone["completed"];
     const activityType = activity[2][0];
     const activityNumber = activity[2][1];
     // Compare the same activity exercise with milestone exercise's milestone which has not been reached yet
-    if (milestoneType === activityType && !milestoneHit) {
+    if (milestoneType === activityType) {
       // If the activity is greater than a milestone, mark it as an achievement
       if (activityNumber >= milestoneTarget) {
         if (!achievementFound) {

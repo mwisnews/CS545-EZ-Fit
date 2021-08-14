@@ -35,14 +35,14 @@
   });
 
   // On calendar double click, redirect to add new activity
-  calendar.on("beforeCreateSchedule", function (event) {
+  calendar.on("beforeCreateSchedule", async function (event) {
     event.guide.clearGuideElement();
     // Check if it was a double click
     if (event.triggerEventName === "dblclick") {
-      // Send request to add new activity page with the given date
+      // Save the selected date in local storage and redirect to add activity page
       const selectedDate = event.start._date;
-      // TODO
-      console.log(`Making call for date ${selectedDate}...`);
+      localStorage.setItem("activityDate", selectedDate);
+      window.location.replace("/users/addActivity");
     }
   });
 

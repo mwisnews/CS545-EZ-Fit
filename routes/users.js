@@ -25,6 +25,41 @@ router.put("/deleteActivity", async (req, res) => {
   }
 });
 
+router.get("/addActivity", async (req, res) => {
+  try {
+    // Get all goals
+    let goalInfo = await goalData.getAllGoals();
+    let goalArray = [];
+    for (let i = 0; i < goalInfo.length; i++) {
+      goalArray.push([goalInfo[i]._id, goalInfo[i].description]);
+    }
+    // Finally, render the page with the information
+    res.render("pages/addActivity", {
+      stylesheets: ["/public/css/activity.css"],
+      goalSelects: goalArray,
+    });
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+router.post("/addActivity", async (req, res) => {
+  try {
+    let newActivity = [
+      req.body.exerciseDate,
+      req.body.exerciseGoal,
+      [req.body.exerciseType, parseFloat(req.body.exerciseAmount)],
+      req.body.exerciseDesc.trim(),
+    ];
+    await userData.addNewActivity(req.session.userID, newActivity);
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 router.get("/editActivity", async (req, res) => {
   try {
     // Get all goals
@@ -54,9 +89,7 @@ router.post("/editActivity", async (req, res) => {
       oldStrings[4],
       oldStrings[5] === "true",
     ];
-    console.log(oldActivity);
     await userData.removeActivity(req.session.userID, oldActivity);
-    console.log(req.body);
     let newActivity = [
       req.body.exerciseDate,
       req.body.exerciseGoal,
