@@ -4,22 +4,25 @@
   let lastMonthButton = $("#lastMonth");
   let nextMonthButton = $("#nextMonth");
 
-  // Hide buttons
-  //document.getElementById("calendar").addEventListener("click", hideButtons);
-  function hideButtons() {
-    var buttons = document.getElementsByClassName(
-      "tui-full-calendar-popup-edit"
-    )[0];
-    var line = document.getElementsByClassName(
-      "tui-full-calendar-popup-vertical-line"
-    )[0];
-    if (buttons) {
-      buttons.style.display = "none";
-    }
-    if (line) {
-      line.style.display = "none";
-    }
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
   }
+
+  // Populate a motivational quote
+  async function fetchQuotes() {
+    const quotes = await fetch("https://type.fit/api/quotes");
+    const parsedQuotes = await quotes.json();
+    console.log(parsedQuotes);
+    const randomNum = getRandomInt(0, parsedQuotes.length);
+    // Use that randomQuote and put into the page
+    const randomQuote = parsedQuotes[randomNum];
+    const quoteText = $("#motivationalQuote");
+    quoteText.html(`${randomQuote.text} - ${randomQuote.author || "Unknown"}`);
+  }
+
+  fetchQuotes();
 
   var calendar = new Calendar("#calendar", {
     defaultView: "month",

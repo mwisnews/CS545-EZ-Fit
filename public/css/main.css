@@ -39,6 +39,12 @@ a {
   cursor: pointer;
 }
 
+#motivationalQuote {
+  text-align: center;
+  font-size: xx-large;
+  margin-bottom: 10px;
+}
+
 /*.logout-link {
   display: none;
 }*/
