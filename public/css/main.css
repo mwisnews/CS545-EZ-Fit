@@ -2,6 +2,15 @@
   color: black;
 }
 
+.line h3 {
+  background-color: white;
+  padding-left: 10px;
+}
+
+.line label {
+  padding-left: 10px;
+}
+
 .site-header {
   display: flex;
   padding: 15px;
@@ -19,6 +28,38 @@
   margin: 0;
 }
 
+a:hover {
+  color: red;
+}
+ 
+.home {
+  background-color: black;
+  color: white;
+}
+ 
+.home h2 {
+  color: white; 
+  padding-left: 10px; 
+  padding-top: 10px; 
+  text-align: center;
+}
+ 
+.home h3 {
+  color: white; 
+  padding-left: 10px; 
+}
+
+.home h4 {
+  color: white; 
+  padding-left: 10px; 
+}
+
+
+.newPages h5 {
+  color: green;
+  padding-left: 2%;
+}
+
 .error {
   color: red;
   font-size: 16px;
@@ -26,11 +67,24 @@
 }
 
 .container-fluid {
-  padding: 15px;
+  padding: 0px;
 }
 
 a {
   font-size: 16px;
+}
+
+.goals h2{
+  text-align: center;
+  color: red;
+}
+
+.goals h3 {
+  padding: 10px;
+}
+
+.goals {
+  background-color: black;
 }
 
 /* Make the entire calendar with a clickable cursor */
@@ -43,6 +97,7 @@ a {
   text-align: center;
   font-size: xx-large;
   margin-bottom: 10px;
+  padding: 10px;
 }
 
 /*.logout-link {
