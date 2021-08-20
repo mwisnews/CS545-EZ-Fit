@@ -1,14 +1,14 @@
-  <h3>
-    <a href="/home" class="home-link">Back to Home</a>
-  </h3>
-<label for="workout">Choose a workout type:</label>
+<div class="line">
+    <h3><a href="/home" class="home-link"><button>Back to Home</button></a></h3>
+  <label for="workout">Choose a workout type:</label>
 
-<select name="workout" id="workout">
-    {{#each workoutList}}
-        <option value="{{this}}">{{this}}</option>
-    {{/each}}
-    <option value="All" selected>All</option>
-</select>
+  <select name="workout" id="workout">
+      {{#each workoutList}}
+          <option value="{{this}}">{{this}}</option>
+      {{/each}}
+      <option value="All" selected>All</option>
+  </select>
+</div>
 <div id="chartContainer" style="height: 500px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

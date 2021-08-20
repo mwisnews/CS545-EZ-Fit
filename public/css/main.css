@@ -110,6 +110,15 @@ label{
   color: black;
 }
 
+.line h3 {
+  background-color: white;
+  padding-left: 10px;
+}
+
+.line label {
+  padding-left: 10px;
+}
+
 .site-header {
   margin:0px;
   margin-top:60px;
@@ -149,6 +158,43 @@ nav{
   border-bottom: 5px solid #0026ff;
 }
 
+a:hover {
+  color: red;
+}
+ 
+.tui-full-calendar-popup {
+  color: black;
+}
+
+
+.home {
+  color: black;
+  background-color: rgb(166, 206, 206);
+}
+ 
+.home h2 {
+  color: black;
+  padding-left: 10px; 
+  padding-top: 10px; 
+  text-align: center;
+}
+ 
+.home h3 {
+  color: black;
+  padding-left: 10px; 
+}
+
+.home h4 {
+  color: black;
+  padding-left: 10px; 
+}
+
+
+.newPages h5 {
+  color: black;
+  padding-left: 2%;
+}
+
 .error {
   color: red;
   font-size: 16px;
@@ -156,11 +202,24 @@ nav{
 }
 
 .container-fluid {
-  padding: 15px;
+  padding: 0px;
 }
 
 a {
   font-size: 16px;
+}
+
+.goals h2{
+  text-align: center;
+  color: black;
+}
+
+.goals h3 {
+  padding: 10px;
+}
+
+.goals { 
+  background-color: rgb(166, 206, 206);
 }
 
 /*.logout-link {
@@ -183,6 +242,7 @@ a {
   text-align: center;
   font-size: xx-large;
   margin-bottom: 10px;
+  padding: 10px;
 }
 
 /*.logout-link {
