@@ -1,36 +1,55 @@
+<div class="login-body">
 <div id="loginTexts">
-  <h1 id="loginWelcome">Welcome to EZ-Fit!</h1>
-  <h2 id="loginPrompt">Please sign in below using your email and password.</h2>
+  <br>
+  <h1 id="loginWelcome">Welcome back!</h1>
 </div>
+
+<div id="about">
+  <p>
+  Make yourself a priority,<br/>
+  with EZ-fit it's that easy.<br/>
+  </p>
+</div>
+
+
+<div id="info">
+  <div class="titleWrapper">
+    <span class="line"></span>
+    <h1 class="title">
+      <span>EZ-Fit</span>
+  </div>
+</div>
+
+
 
 <div id="loginFormDiv">
   <form method="POST" id="loginForm">
     <div class="form-group">
-      <label for="emailLogin">Please enter your email address</label>
+      <br>
       <input
         type="email"
         name="username"
+        placeholder="E-mail"
         id="emailLogin"
-        placeholder="Email Address"
         required
         class="form-control"
         value="{{username}}"
       />
     </div>
     <div class="form-group">
-      <label for="passwordLogin">Please enter your password</label>
+      <br>
       <input
         type="password"
         name="password"
-        id="passwordLogin"
         placeholder="Password"
+        id="passwordLogin"
         required
         class="form-control"
         value="{{password}}"
       />
     </div>
 
-    <button id="loginBtn" class="btn btn-primary" type="submit">Login</button>
+    <button id="loginBtn" class="btn btn-primary" type="submit">Sign In</button>
 
     {{#if error}}
       <p class="error">
@@ -42,4 +61,6 @@
 <div id="newUserLinkDiv">
   <br />
   <a href="/newUser" id="newUserLink">Are you new to EZ-Fit? Sign up here!</a>
+</div>
+</div>
 </div>
