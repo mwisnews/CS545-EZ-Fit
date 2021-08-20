@@ -43,7 +43,7 @@
     // Check if it was a double click
     if (event.triggerEventName === "dblclick") {
       // Save the selected date in local storage and redirect to add activity page
-      const selectedDate = event.start._date;
+      let selectedDate = new Date(event.start._date).toDateString();
       localStorage.setItem("activityDate", selectedDate);
       window.location.replace("/users/addActivity");
     }
