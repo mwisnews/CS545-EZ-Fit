@@ -110,6 +110,7 @@ label{
   color: black;
 }
 
+/*
 .site-header {
   margin:0px;
   margin-top:60px;
@@ -139,14 +140,53 @@ nav{
   text-decoration: none;
   font-size: 17px;
   font-weight: bolder;
+} */
+
+
+@media screen and (max-width: 600px) {
+  .topnav a, .topnav-right {
+    float: none;
+    display: block;
+  }
+
+  .topnav-centered a {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
 }
 
-.links:hover {
-  border-bottom: 5px solid #0026ff;
+.topnav-right {
+  float: right;
 }
 
-.selected {
-  border-bottom: 5px solid #0026ff;
+.topnav {
+  position: relative;
+  background-color: rgb(251, 255, 196);
+  overflow: hidden;
+}
+
+.topnav a {
+  font-weight: bold;
+  float: left;
+  color: #0026ff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.topnav-centered a {
+  float: none;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.topnav a:hover {
+  border-bottom: 7px solid #0026ff;
 }
 
 .error {

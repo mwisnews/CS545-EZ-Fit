@@ -24,21 +24,40 @@
 
   </head>
 
-  <body>
+  <!-- <body>
     <header class="site-header">
-      <!--<a href="/" class="home-link">-->
+      <!--<a href="/" class="home-link"> --
     <div class="left-header">
         <nav>
           <div class="left-links">
             <a class="links selected" href="/home">Home</a>
             <a class="links" href="/goals"> Add a goal</a>
             </div>
+            
             <div class="right-links">
             <a class="links" href="/logout">Logout</a>
           </div>
         </nav>
     </div>
-    </header>
+    </header> -->
+
+<div class="topnav">
+
+  <!-- Centered link -->
+  <div class="topnav-centered">
+    <a href="\home" class="active"> <img src="/public/images/logo.png" style="width:250px;"> </a>
+  </div>
+
+  <!-- Left-aligned links (default) -->
+  <a href="/home">Home</a>
+  <a href="/goals">Add a goal</a>
+
+  <!-- Right-aligned links -->
+  <div class="topnav-right">
+    <a href="/logout">Logout</a>
+  </div>
+
+</div>
 
     <main class="container-fluid">
       {{{body}}}
