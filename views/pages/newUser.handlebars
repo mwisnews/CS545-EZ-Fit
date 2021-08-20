@@ -1,44 +1,64 @@
+<div class="login-body">
 <div id="newUserTexts">
-    <h1 id="newUserWelcome">Sign Up for EZ-Fit</h1>
+    <h2 id="newUserPrompt">Time to reach your goals.</h2>
     <br>
-    <h2 id="newUserPrompt">Please fill out the form below and click Register.</h2>
 </div>
+
+<div id="about">
+  <p>
+  Make yourself a priority,<br/>
+  with EZ-fit it's that easy.<br/>
+  </p>
+</div>
+
+<div id="info">
+  <div class="titleWrapper">
+    <span class="line"></span>
+    <h1 class="title">
+      <span>EZ-Fit</span>
+  </div>
+</div>
+
 <div id="newUserFormDiv">
     <form method="POST" id="newUserForm">
         <div class="form-group">
-            <label for="firstNameBox">Please enter your first name</label>
             <input type="text" name="firstName" id="firstNameBox" placeholder="First Name" class="form-control" required
                 value="{{firstName}}">
+                <br>
+                <br>
         </div>
 
         <div class="form-group">
-            <label for="lastNameBox">Please enter your last name</label>
             <input type="text" name="lastName" id="lastNameBox" placeholder="Last Name" class="form-control" required
                 value="{{lastName}}">
+                <br>
+                <br>
         </div>
 
         <div class="form-group">
-            <label for="emailBox">Please enter your email</label>
             <input type="email" name="email" id="emailBox" placeholder="Email" class="form-control" required
                 value="{{email}}">
+                <br>
+                <br>
         </div>
 
         <div class="form-group">
-            <label for="passwordBox1">Please enter a password</label>
             <input type="password" name="password" id="passwordBox1" placeholder="Password" class="form-control"
                 required value="{{password}}">
+                <br>
+                <br>
         </div>
 
         <div class="form-group">
-            <label for="passwordBox2">Please re-enter your password</label>
             <input type="password" name="passwordConfirm" id="passwordBox2" placeholder="Confirm Password"
                 class="form-control" required value="{{passwordConfirm}}">
+
         </div>
         <br>
         <button id="newUserSubmitBtn" type="submit" class="btn btn-primary">Register</button>
 
         <p class="error">{{error}}</p>
     </form>
-    <br>
     <a href="/">Already a User? Sign in Here!</a>
+</div>
 </div>
