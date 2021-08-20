@@ -104,7 +104,10 @@ label{
 
 .bg-primary{
   color:rgb(0, 0, 0);
+}
   
+.bg-primary {
+  color: black;
 }
 
 /* Navigation Bar */
@@ -122,6 +125,7 @@ nav{
   background-color: rgb(251, 255, 196);
   overflow: auto;
   height: 60px;
+  z-index: 1;
 }
 
 .left-links{
@@ -162,8 +166,6 @@ a {
   font-size: 16px;
 }
 
-
-
 /*.logout-link {
   display: none;
 }*/
@@ -174,18 +176,18 @@ a {
   justify-content: space-between;
 }
 
-.goals .goal {
-  padding: 10px 30px;
+/* Make the entire calendar with a clickable cursor */
+.tui-full-calendar-weekday-grid-line,
+.tui-full-calendar-near-month-day {
+  cursor: pointer;
 }
-.goals .goal-completed-true {
-  background: #d3d3ff;
+
+#motivationalQuote {
+  text-align: center;
+  font-size: xx-large;
+  margin-bottom: 10px;
 }
-.goals .goal-completed-true {
-  background: #d3d3ff;
-}
-.goals .goal-completed-false {
-  background: #ffd3e7;
-}
-.goals .new-goal-form input, .goals .new-goal-form textarea {
-  display: block;
-}
+
+/*.logout-link {
+  display: none;
+}*/

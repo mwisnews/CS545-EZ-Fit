@@ -1,0 +1,11 @@
+.edit-activity-form input,
+.edit-activity-form textarea,
+.edit-activity-form select {
+  display: block;
+}
+
+.add-activity-form input,
+.add-activity-form textarea,
+.add-activity-form select {
+  display: block;
+}

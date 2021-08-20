@@ -76,8 +76,8 @@ const main = async () => {
   const goal1 = await goals.createGoal(
     maxID,
     "Cardio",
-    "Training for a 5K",
-    ["Running", 3.1],
+    "Training for a Half Marathon",
+    ["Running", 13.1],
     "7/1/2021",
     "7/15/2021",
     true,
@@ -87,6 +87,11 @@ const main = async () => {
       ["Running", 2],
       ["Running", 2.5],
       ["Running", 3],
+      ["Running", 5],
+      ["Running", 7],
+      ["Running", 9],
+      ["Running", 11],
+      ["Running", 13],
     ]
   );
   console.log(goal1);
@@ -115,7 +120,7 @@ const main = async () => {
     await goals.addNewMilestone(goal2._id.toString(), ["Bench Press", 130])
   );
   console.log(
-    await goals.removeMilestone(goal2._id.toString(), ["Bench Press", 130])
+    await goals.removeMilestone(goal2._id.toString(), goal2.milestones.length)
   );
   console.log(
     await goals.updateGoal(goal2._id.toString(), {
@@ -184,6 +189,60 @@ const main = async () => {
       goal2._id.toString(),
       ["Bench Press", 80],
       "Not the best lifting day :(",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/1/2021",
+      goal1._id.toString(),
+      ["Running", 3],
+      "Starting to train!!",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/2/2021",
+      goal1._id.toString(),
+      ["Running", 5],
+      "Getting better",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/3/2021",
+      goal1._id.toString(),
+      ["Running", 2.5],
+      "Sprint practice",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/5/2021",
+      goal1._id.toString(),
+      ["Running", 6],
+      "Hard work",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/6/2021",
+      goal1._id.toString(),
+      ["Running", 5.7],
+      "Not the best running day",
+    ])
+  );
+
+  console.log(
+    await users.addNewActivity(maxID, [
+      "8/7/2021",
+      goal1._id.toString(),
+      ["Running", 9.8],
+      "So close!!",
     ])
   );
 
