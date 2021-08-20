@@ -4,6 +4,9 @@
   const activityDate = new Date(localStorage.getItem("activityDate"))
     .toISOString()
     .split("T")[0];
+  console.log(localStorage.getItem("activityDate"));
+  console.log(new Date(localStorage.getItem("activityDate")));
+  console.log(new Date(localStorage.getItem("activityDate")).toISOString());
   exerciseDate.val(activityDate);
 
   // Set exercise in the edit form

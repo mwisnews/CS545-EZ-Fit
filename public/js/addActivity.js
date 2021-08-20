@@ -1,9 +1,13 @@
 (function ($, localStorage) {
   // Set date in the edit form
   const exerciseDate = $("#exerciseDate");
+  console.log(localStorage.getItem("activityDate"));
+
   const activityDate = new Date(localStorage.getItem("activityDate"))
     .toISOString()
     .split("T")[0];
+  console.log(new Date(localStorage.getItem("activityDate")));
+  console.log(new Date(localStorage.getItem("activityDate")).toISOString());
   exerciseDate.val(activityDate);
 })(jQuery, window.localStorage);
 

@@ -1,7 +1,7 @@
 <div class="home">
   <h1 id="motivationalQuote"></h1>
   <h2>
-    Your Personal Calendar:
+    Your Personal Calendar
   </h2>
   {{#greaterThanOne userInfo.consecutiveDays}}
   <h3>You have been using EZ-Fit for the past {{userInfo.consecutiveDays}} days! Keep up the good work!</h3>
@@ -9,8 +9,15 @@
   <h3>You have been using EZ-Fit for the past {{userInfo.consecutiveDays}} day! We hope to see you back soon!</h3>
   {{/greaterThanOne}}
   <h4>Double click any date to add a new activity!</h4>
-  <a href="/goals" style="text-align:right;">Add a new goal!</a>
-  <h4><a href="/graph/line">Line Graph</a></h4>
+  <br>
+  <div class = "newPages">
+      <h5>
+          <a href="/goals"><button>Add a new goal here!</button></a>
+      </h5>
+      <h5>
+          <a href="/graph/line"><button>Check out your line graph here!</button></a>
+      </h5>
+  </div>
   <h3 id="calendarMonth" style="text-align:center;"></h3>
   <div id="calendarButtons" style="display:flex;justify-content:center;align-items:center;margin-bottom:5px;">
     <button id="lastMonth" style="margin-right:5px;"><img src="/public/images/back.png" style="width:40px;"></button>
@@ -18,6 +25,7 @@
   </div>
 
   <div id="calendar" class="calendarView" style="height: 800px;width: 80%;margin:auto;"></div>
+  <br><br><br>
 </div>
 <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
 <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
