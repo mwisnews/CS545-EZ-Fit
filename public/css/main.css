@@ -168,30 +168,30 @@ a:hover {
 
 
 .home {
-  background-color: black;
-  color: white;
+  color: black;
+  background-color: rgb(166, 206, 206);
 }
  
 .home h2 {
-  color: white; 
+  color: black;
   padding-left: 10px; 
   padding-top: 10px; 
   text-align: center;
 }
  
 .home h3 {
-  color: white; 
+  color: black;
   padding-left: 10px; 
 }
 
 .home h4 {
-  color: white; 
+  color: black;
   padding-left: 10px; 
 }
 
 
 .newPages h5 {
-  color: green;
+  color: black;
   padding-left: 2%;
 }
 
@@ -211,15 +211,15 @@ a {
 
 .goals h2{
   text-align: center;
-  color: red;
+  color: black;
 }
 
 .goals h3 {
   padding: 10px;
 }
 
-.goals {
-  background-color: black;
+.goals { 
+  background-color: rgb(166, 206, 206);
 }
 
 /*.logout-link {
