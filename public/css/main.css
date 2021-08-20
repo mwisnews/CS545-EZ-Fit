@@ -162,6 +162,11 @@ a:hover {
   color: red;
 }
  
+.tui-full-calendar-popup {
+  color: black;
+}
+
+
 .home {
   background-color: black;
   color: white;
